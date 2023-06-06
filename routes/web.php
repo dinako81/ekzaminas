@@ -50,8 +50,6 @@ Route::prefix('cats')->name('cats-')->group(function () {
 
 Route::prefix('services')->name('services-')->group(function () {
     Route::get('/', [P::class, 'index'])->name('index')->middleware('role:admin|client');
-    // Route::get('/colors', [P::class, 'colors'])->name('colors')->middleware('role:admin');
-    // Route::get('/color-name', [P::class, 'colorName'])->name('color-name')->middleware('role:admin');
     Route::get('/create', [P::class, 'create'])->name('create')->middleware('role:admin');
     Route::post('/create', [P::class, 'store'])->name('store')->middleware('role:admin');
     Route::get('/{service}', [P::class, 'show'])->name('show')->middleware('role:admin');
@@ -64,9 +62,9 @@ Route::prefix('masters')->name('masters-')->group(function () {
     Route::get('/', [M::class, 'index'])->name('index')->middleware('role:admin');
     Route::get('/create', [M::class, 'create'])->name('create')->middleware('role:admin');
     Route::post('/create', [M::class, 'store'])->name('store')->middleware('role:admin');
-    Route::get('/edit/{cat}', [M::class, 'edit'])->name('edit')->middleware('role:admin');
-    Route::put('/edit/{cat}', [M::class, 'update'])->name('update')->middleware('role:admin');
-    Route::delete('/delete/{cat}', [M::class, 'destroy'])->name('delete')->middleware('role:admin');
+    Route::get('/edit/{master}', [M::class, 'edit'])->name('edit')->middleware('role:admin');
+    Route::put('/edit/{master}', [M::class, 'update'])->name('update')->middleware('role:admin');
+    Route::delete('/delete/{master}', [M::class, 'destroy'])->name('delete')->middleware('role:admin');
 });
 
 Route::prefix('orders')->name('orders-')->group(function () {

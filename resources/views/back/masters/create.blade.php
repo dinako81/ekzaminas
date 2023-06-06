@@ -22,14 +22,13 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Car Service List</label>
                             <select class="form-select" name="cat_id">
                                 <option value="0">Car Service List</option>
                                 @foreach($cats as $cat)
                                 <option value="{{$cat->id}}">{{$cat->title}}</option>
                                 @endforeach
                             </select>
-                            <div class="form-text">Please select provided service</div>
+                            <div class="form-text">Please select car service</div>
                         </div>
 
                         <div class="mb-3">

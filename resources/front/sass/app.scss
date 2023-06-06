@@ -1,5 +1,12 @@
 @import 'variables';
 @import 'bootstrap/scss/bootstrap';
+
+body {
+    background-image: url('../../front/images/forest.webp');
+    background-size:contain;
+    background-repeat:round;
+  }
+
 .product-line {
     display: flex;
     flex-direction: column;
@@ -184,3 +191,21 @@
         }
     }
 }
+
+.sort-filter-buttons{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    height: 100%;
+    position: relative;
+    button,
+    a {
+        top: -16px;
+        position: relative;
+        font-size: 12px;
+    }
+
+}
+    

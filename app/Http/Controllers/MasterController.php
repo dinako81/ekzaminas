@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Master;
+use App\Models\Service;
 use App\Models\Cat;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -78,26 +79,77 @@ class MasterController extends Controller
     public function edit(Master $master)
     {
         $services = Service::all();
+        $cats = Cat::all();
         
         return view('back.masters.edit', [
             'master' => $master,
-            'services' => $services
+            'services' => $services,
+            'cats' => $cats,
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateMasterRequest $request, Master $master)
+    
+    public function update(Request $request, Master $master)
     {
-        //
+        if ($request->delete == 1) {
+            $master->deletePhoto();
+            return redirect()->back();
+        }
+
+        $photo = $request->photo;
+
+        if ($photo) {
+            $name = $master->savePhoto($photo);
+            $master->deletePhoto();
+            $master->update([
+                'name' => $request->name,
+                'surname' => $request->surname,
+                'photo' => $request->photo,
+                'cat_id' =>$request->cat_id,
+            ]);
+        } else {
+            $master->update([
+                'name' => $request->name,
+                'surname' => $request->surname,
+                'cat_id' =>$request->cat_id,
+            ]);
+        }
+
+        foreach ($request->gallery ?? [] as $gallery) {
+            Photo::add($gallery, $master->id);
+        }
+        return redirect()
+        ->route('masters-index')
+        ->with('ok', 'Master was updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+   
     public function destroy(Master $master)
     {
-        //
+        // if ($master->gallery->count()) {
+        //     foreach ($master->gallery as $gal) {
+        //         $gal->deletePhoto();
+        //     }
+        // }
+        
+        if ($master->photo) {
+            $master->deletePhoto();
+        }
+        
+        $master->delete();
+        return redirect()
+        ->route('masters-index')
+        ->with('warn', 'Master was deleted');
+        
+    }
+
+    public function destroyPhoto(Photo $photo)
+    {
+        $photo->deletePhoto();
+        
+        return redirect() 
+        -> back()
+        ->with('warn', 'Photo was deleted');
+        
     }
 }

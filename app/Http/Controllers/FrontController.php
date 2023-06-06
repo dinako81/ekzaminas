@@ -9,12 +9,42 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class FrontController extends Controller
 {
-    public function index()
+    public function index(Request $request, Cat $cat)
     {
         $services = Service::all();
+        
+        $sort = $request->sort ?? '';
+        $filter = $request->filter ?? '';
+
+        $services = match($filter) {
+            'cat' => function ($cat) {
+                return Service::whereHas('cat', function ($query) use ($cat) {
+                    $query->where('name', $cat);
+                })->get();
+            },
+            default => Service::all(),
+        };
+
+        $services = match($sort) {
+            'price_0-50' => $services->orderBy('price'),
+            'price_51-100' => $services->orderBy('price'),
+            'price_101-500' => $services->orderBy('price'),
+            'price_501-...' => $services->orderBy('price'),
+            default => $services
+        };
+
+        $request->session()->put('last-hotelt-view', [
+            'sort' => $sort,
+            'filter' => $filter
+        ]);
 
         return view('front.index', [
-            'services' => $services
+            'cat' => $cat,
+            'services' => $services,
+            'sortSelect' => Service::SORT,
+            'sort' => $sort,
+            'filterSelect' => Service::FILTER,
+            'filter' => $filter,
         ]);
     }
 
