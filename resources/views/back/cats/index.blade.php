@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card mt-5">
                 <div class="card-header">
-                    <h1>Autoservicies List</h1>
+                    <h1>Restoranų sarašas:</h1>
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
@@ -21,7 +21,12 @@
                                     <img src="{{asset('cats-photo') .'/no.jpg'}}">
                                     @endif
                                 </div> --}}
-                                <h2>{{$cat->title}}</h2>
+                                <div class="mb-3">
+                                    <h2>{{$cat->title}}</h2>
+                                </div>
+                                <div class="mb-3">
+                                    <h3>{{$cat->adress}}</h3>
+                                </div>
                                 {{-- <div class="cat-colors-count">
                                         @for($i = 0; $i < $cat->colors_count; $i++)
                                             <div class="--random--color"></div>
@@ -29,9 +34,9 @@
                                     </div> --}}
                             </div>
                             <div class="buttons">
-                                <a href="{{route('cats-edit', $cat)}}" class="btn btn-outline-success">Edit</a>
+                                <a href="{{route('cats-edit', $cat)}}" class="btn btn-outline-success">Koreguoti</a>
                                 <form action="{{route('cats-delete', $cat)}}" method="post">
-                                    <button type="submit" class="btn btn-outline-danger">delete</button>
+                                    <button type="submit" class="btn btn-outline-danger">Ištrinti</button>
                                     @csrf
                                     @method('delete')
                                 </form>
