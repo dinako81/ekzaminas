@@ -31,6 +31,21 @@
 
                                     @endforeach
                                 </div>
+                                <div class="photo">
+                                    @if($dish->photo)
+                                    <img src="{{asset('dishes-photo') .'/t_'. $dish->photo}}">
+                                    @else
+                                    <img src="{{asset('dishes-photo') .'/no.png'}}">
+                                    @endif
+                                </div>
+
+                                <div class="gallery">
+                                    <div>
+                                        @foreach($dish->gallery as $photo)
+                                        <img src="{{asset('dishes-photo') .'/'. $photo->photo}}">
+                                        @endforeach
+                                    </div>
+                                </div>
 
                                 <div class="buy">
 

@@ -99,7 +99,7 @@ class CartController extends Controller
 
             $dishes[$key]['title'] = $p->title;
             $dishes[$key]['count'] = $p->count;
-            $dishes[$key]['price'] = $p->price;
+            // $dishes[$key]['price'] = $p->price;
             $dishes[$key]['total'] = $p->count * $p->price;
             $total += $dishes[$key]['total'];
 

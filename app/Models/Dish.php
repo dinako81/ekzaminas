@@ -33,6 +33,7 @@ class Dish extends Model
         return $this->belongsTo(Menu::class);
     }
 
+   
     public function photo()
     {
         return $this->hasMany(Photo::class);

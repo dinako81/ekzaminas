@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card mt-5">
                 <div class="card-header">
-                    <h2>Orders</h2>
+                    <h2>Užsakymai</h2>
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="front-order-dishes">
                                     <ul class="list-group">
-                                        @foreach($order->dish as $dish)
+                                        @foreach($order->dishes as $dish)
                                         <li class="list-group-item">
                                             <div class="front-order-dishes-list">
                                                 <span>{{$dish['title']}}</span>
