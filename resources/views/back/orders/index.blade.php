@@ -26,21 +26,21 @@
                                     <div class="front-order-status">{{$status[$order->status]}}</div>
 
                                 </div>
-                                <div class="front-order-services">
+                                <div class="front-order-dishes">
                                     <ul class="list-group">
-                                        @foreach($order->services as $service)
+                                        @foreach($order->dish as $dish)
                                         <li class="list-group-item">
-                                            <div class="front-order-services-list">
-                                                <span>{{$service['title']}}</span>
-                                                <i>{{$service['price']}} eur</i>
+                                            <div class="front-order-dishes-list">
+                                                <span>{{$dish['title']}}</span>
+                                                <i>{{$dish['price']}} eur</i>
                                                 X
-                                                <i>{{$service['count']}}</i>
-                                                <b>{{$service['total']}} eur</b>
+                                                <i>{{$dish['count']}}</i>
+                                                <b>{{$dish['total']}} eur</b>
                                             </div>
                                         </li>
                                         @endforeach
                                         <li class="list-group-item">
-                                            <div class="front-order-services-list">
+                                            <div class="front-order-dishes-list">
                                                 <b>{{$order->price}} eur</b>
                                             </div>
                                         </li>

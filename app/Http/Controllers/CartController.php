@@ -92,24 +92,24 @@ class CartController extends Controller
         $cart = $request->session()->get('cart', []);
         $Cart = new Cart($cart);
 
-        $services = [];
+        $dishes = [];
         $total = 0;
 
-        $Cart->dishes()->each(function($p, $key) use (&$total, &$services) {
+        $Cart->dishes()->each(function($p, $key) use (&$total, &$dishes) {
 
-            $services[$key]['title'] = $p->title;
-            $services[$key]['count'] = $p->count;
-            $services[$key]['price'] = $p->price;
-            $services[$key]['total'] = $p->count * $p->price;
-            $total += $services[$key]['total'];
+            $dishes[$key]['title'] = $p->title;
+            $dishes[$key]['count'] = $p->count;
+            $dishes[$key]['price'] = $p->price;
+            $dishes[$key]['total'] = $p->count * $p->price;
+            $total += $dishes[$key]['total'];
 
         });
 
-        // $services = json_encode($services);
+        // $dishes = json_encode($dishes);
         $userId = $request->user()->id;
 
         Order::create([
-            'services' => $services,
+            'dishes' => $dishes,
             'user_id' => $userId,
             'price' => $total
         ]);

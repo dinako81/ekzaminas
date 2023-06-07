@@ -33,7 +33,7 @@
                                 </div>
 
                                 <div class="buy">
-                                    <span>{{$menu->price}} eur</span>
+
                                     <section class="--add--to--cart" data-url="{{route('cart-add')}}">
                                         <button type="button" class="btn btn-primary">add to cart</button>
                                         <input type="hidden" name="id" value={{$dish->id}}>
