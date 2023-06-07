@@ -9,7 +9,7 @@ class Cat extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'address', 'phoneNumber'];
+    protected $fillable = ['title', 'code', 'address'];
     public $timestamps = false;
 
     public function catService()
@@ -17,9 +17,9 @@ class Cat extends Model
         return $this->hasMany(Service::class);
     }
     
-    public function master()
+    public function menu()
     {
-        return $this->hasMany(Master::class);
+        return $this->hasMany(Menu::class);
     }
     
 }

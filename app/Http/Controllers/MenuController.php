@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Service;
+use App\Models\Menu;
 use App\Models\Cat;
 
 use Illuminate\Http\Request;
@@ -12,23 +12,23 @@ use Illuminate\Support\Facades\Validator;
 // use Intervention\Image\ImageManagerStatic as Image;
 // use Illuminate\Http\UploadedFile;
 
-class ServiceController extends Controller
+class MenuController extends Controller
 {
     
     public function index()
     {
-        $services = Service::all();
-        return view('back.autoServices.index', [  
-            'services' => $services
+        $menus = Menu::all();
+        return view('back.menus.index', [  
+            'menus' => $menus
         ]);
     }
 
     
     public function create()
     {
-        $cats = Cat::all();
-        return view('back.autoServices.create', [  
-            'cats' => $cats
+        $menus = Menu::all();
+        return view('back.menus.create', [  
+            'menus' => $menus
         ]);
     }
 
@@ -60,8 +60,6 @@ class ServiceController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:3|max:100',
-            'duration' => 'required|numeric',
-            'price' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -71,44 +69,41 @@ class ServiceController extends Controller
                 ->withErrors($validator);
         }
 
-        $id = Service::create([
+        $id = Menu::create([
             'title' => $request->title,
-            'duration' => $request->duration,
-            'price' => $request->price,
             'cat_id' => $request->cat_id,
         ])->id;
 
        
         return redirect()
-        ->route('services-index')
-        ->with('ok', 'New provided service was created');
+        ->route('menus-index')
+        ->with('ok', 'Naujas menu sukurtas');
     }
     
-    public function show(Service $service)
+    public function show(Menu $menu)
     {
         //
     }
 
    
-    public function edit(Service $service)
+    public function edit(Menu $menu)
     {
         $cats = Cat::all();
         
-        return view('back.autoServices.edit', [
-            'service' => $service,
+        return view('back.menus.edit', [
+            'menu' => $menu,
             'cats' => $cats,
         ]);
     }
 
   
-    public function update(Request $request, Service $service)
+    public function update(Request $request, Menu $menu)
     {
         $cats = Cat::all();
         
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:3|max:100',
-            'duration' => 'required|numeric',
-            'price' => 'required|numeric',
+           
         ]);
 
         if ($validator->fails()) {
@@ -118,22 +113,22 @@ class ServiceController extends Controller
                 ->withErrors($validator);
         }
 
-        $service->update([
+        $menu->update([
             'title' => $request->title,
-            'duration' => $request->duration,
-            'price' => $request->price,
-           'cat_id' => $request->cat_id,
+            'cat_id' => $request->cat_id,
         ]);
 
         return redirect()
-        ->route('services-index')
-        ->with('ok', 'Provided service was updated');
+        ->route('menus-index')
+        ->with('ok', 'Menu papildytas');
     }
 
    
-    public function destroy(Service $service)
+    public function destroy(Menu $menu)
     {
-        $service->delete();
-        return redirect()->route('services-index');
+        $menu->delete();
+        return redirect()
+        ->route('menus-index')
+        ->with('warn', 'Menu pašalintas');
     }
 }

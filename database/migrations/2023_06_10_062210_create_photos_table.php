@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
             $table->string('photo', 200);
-            $table->unsignedBigInteger('master_id');
-            $table->foreign('master_id')->references('id')->on('masters');
+            $table->unsignedBigInteger('dish_id');
+            $table->foreign('dish_id')->references('id')->on('dishes');
         });
     }
 

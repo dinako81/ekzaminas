@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Master;
-use App\Models\Service;
+use App\Models\Dish;
+use App\Models\Menu;
 use App\Models\Cat;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,15 +12,15 @@ use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\UploadedFile;
 
-class MasterController extends Controller
+class DishController extends Controller
 {
     
     public function index()
     {
-        $masters = Master::all();
+        $dishes= Dish::all();
 
-        return view('back.masters.index', [
-            'masters' => $masters
+        return view('back.dishes.index', [
+            'dishes' => $dishes
         ]);
     }
 
@@ -28,16 +28,16 @@ class MasterController extends Controller
     public function create()
     {      
         $cats = Cat::all();
-        $masters= Master::all();
+        $dishes= Dish::all();
 
-        return view('back.masters.create', [  
-            'masters' => $masters,
+        return view('back.dishes.create', [  
+            'dishes' => $dishes,
             'cats' => $cats,
         ]);
     }
 
   
-    public function store(Request $request, Master $master)
+    public function store(Request $request, Food $food)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3|max:100',
@@ -54,7 +54,7 @@ class MasterController extends Controller
         
         $photo = $request->photo;
         if ($photo) {
-            $name = $master->savePhoto($photo);
+            $name = $food->savePhoto($photo);
         }
         $id = Master::create([
             'cat_id' => $request->cat_id,
@@ -65,50 +65,50 @@ class MasterController extends Controller
 
       
         return redirect()
-        ->route('masters-index')
+        ->route('dishes-index')
         ->with('ok', 'New Master was created');
     }
 
    
-    public function show(Master $master)
+    public function show(Master $food)
     {
         //
     }
 
    
-    public function edit(Master $master)
+    public function edit(Master $food)
     {
-        $services = Service::all();
+        $services = Menu::all();
         $cats = Cat::all();
         
-        return view('back.masters.edit', [
-            'master' => $master,
+        return view('back.dishes.edit', [
+            'food' => $food,
             'services' => $services,
             'cats' => $cats,
         ]);
     }
 
     
-    public function update(Request $request, Master $master)
+    public function update(Request $request, Master $food)
     {
         if ($request->delete == 1) {
-            $master->deletePhoto();
+            $food->deletePhoto();
             return redirect()->back();
         }
 
         $photo = $request->photo;
 
         if ($photo) {
-            $name = $master->savePhoto($photo);
-            $master->deletePhoto();
-            $master->update([
+            $name = $food->savePhoto($photo);
+            $food->deletePhoto();
+            $food->update([
                 'name' => $request->name,
                 'surname' => $request->surname,
                 'photo' => $request->photo,
                 'cat_id' =>$request->cat_id,
             ]);
         } else {
-            $master->update([
+            $food->update([
                 'name' => $request->name,
                 'surname' => $request->surname,
                 'cat_id' =>$request->cat_id,
@@ -116,29 +116,29 @@ class MasterController extends Controller
         }
 
         foreach ($request->gallery ?? [] as $gallery) {
-            Photo::add($gallery, $master->id);
+            Photo::add($gallery, $food->id);
         }
         return redirect()
-        ->route('masters-index')
+        ->route('dishes-index')
         ->with('ok', 'Master was updated');
     }
 
    
-    public function destroy(Master $master)
+    public function destroy(Master $food)
     {
-        // if ($master->gallery->count()) {
-        //     foreach ($master->gallery as $gal) {
+        // if ($food->gallery->count()) {
+        //     foreach ($food->gallery as $gal) {
         //         $gal->deletePhoto();
         //     }
         // }
         
-        if ($master->photo) {
-            $master->deletePhoto();
+        if ($food->photo) {
+            $food->deletePhoto();
         }
         
-        $master->delete();
+        $food->delete();
         return redirect()
-        ->route('masters-index')
+        ->route('dishes-index')
         ->with('warn', 'Master was deleted');
         
     }

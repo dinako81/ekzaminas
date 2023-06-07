@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Service;
+use App\Models\Menu;
 use App\Models\Cat;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -11,26 +11,26 @@ class FrontController extends Controller
 {
     public function index(Request $request, Cat $cat)
     {
-        $services = Service::all();
+        $menus = Menu::all();
         
         $sort = $request->sort ?? '';
         $filter = $request->filter ?? '';
 
-        $services = match($filter) {
+        $menus = match($filter) {
             'cat' => function ($cat) {
-                return Service::whereHas('cat', function ($query) use ($cat) {
+                return Menu::whereHas('cat', function ($query) use ($cat) {
                     $query->where('name', $cat);
                 })->get();
             },
-            default => Service::all(),
+            default => Menu::all(),
         };
 
-        $services = match($sort) {
-            'price_0-50' => $services->orderBy('price'),
-            'price_51-100' => $services->orderBy('price'),
-            'price_101-500' => $services->orderBy('price'),
-            'price_501-...' => $services->orderBy('price'),
-            default => $services
+        $menus = match($sort) {
+            'price_0-50' => $menus->orderBy('price'),
+            'price_51-100' => $menus->orderBy('price'),
+            'price_101-500' => $menus->orderBy('price'),
+            'price_501-...' => $menus->orderBy('price'),
+            default => $menus
         };
 
         $request->session()->put('last-hotelt-view', [
@@ -40,25 +40,25 @@ class FrontController extends Controller
 
         return view('front.index', [
             'cat' => $cat,
-            'services' => $services,
-            'sortSelect' => Service::SORT,
+            'menus' => $menus,
+            'sortSelect' => Menu::SORT,
             'sort' => $sort,
-            'filterSelect' => Service::FILTER,
+            'filterSelect' => Menu::FILTER,
             'filter' => $filter,
         ]);
     }
 
-    public function catColors(Cat $cat)
-    {
-        $services = $cat->service;
+    // public function catColors(Cat $cat)
+    // {
+    //     $menus = $cat->service;
 
-        return view('front.cat-index', [
-            'services' => $services,
-            'cat' => $cat
-        ]);
-    }
+    //     return view('front.cat-index', [
+    //         'menus' => $menus,
+    //         'cat' => $cat
+    //     ]);
+    // }
 
-    public function showService(Service $service)
+    public function showService(Menu $service)
     {
         return view('front.service', [
             'service' => $service,
@@ -78,11 +78,11 @@ class FrontController extends Controller
     {
 
 
-        $serviceNames = array_map(fn($p) => $p['title'], $order->services);
+        $serviceNames = array_map(fn($p) => $p['title'], $order->menus);
 
         // mapinam $order->servicies, ir grazninam service is vardu
 
-        $servicies = Service::whereIn('title', $serviceNames)->get();
+        $servicies = Menu::whereIn('title', $serviceNames)->get();
         // reikia susirasti produktus pagl spalvas
 
         // return view('front.pdf',[

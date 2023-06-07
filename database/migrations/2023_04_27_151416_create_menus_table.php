@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('title', 100);
-            $table->string('duration', 6);
-            $table->decimal('price', 6, 2)->unsigned();
             $table->unsignedBigInteger('cat_id');
             $table->foreign('cat_id')->references('id')->on('cats');
         });
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('menus');
     }
 };

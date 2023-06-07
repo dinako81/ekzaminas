@@ -40,40 +40,40 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Car Services
+                                Restoranai
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('cats-index') }}">
-                                    Car Services list
+                                    Restoranų sąrašas
                                 </a>
                                 <a class="dropdown-item" href="{{ route('cats-create') }}">
-                                    New Car Service
+                                    Naujas Restoranas
                                 </a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Provided services
+                                Valgiaraštis
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('services-index') }}">
-                                    Provided services list
+                                <a class="dropdown-item" href="{{ route('menus-index') }}">
+                                    Valgiaraščių sąrašas
                                 </a>
-                                <a class="dropdown-item" href="{{ route('services-create') }}">
-                                    New Provided services
+                                <a class="dropdown-item" href="{{ route('menus-create') }}">
+                                    Naujas valgiaraštis
                                 </a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Masters
+                                Patiekalai
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('masters-index') }}">
-                                    Masters list
+                                <a class="dropdown-item" href="{{ route('dishes-index') }}">
+                                    Patiekalų sąrašas
                                 </a>
-                                <a class="dropdown-item" href="{{ route('masters-create') }}">
-                                    New Master
+                                <a class="dropdown-item" href="{{ route('dishes-create') }}">
+                                    Naujas patiekalas
                                 </a>
                             </div>
                         </li>

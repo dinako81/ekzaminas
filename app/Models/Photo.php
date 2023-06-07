@@ -16,7 +16,7 @@ class Photo extends Model
     {
         $name = $gallery->getClientOriginalName();
         $name = rand(1000000, 9999999) . '-' . $name;
-        $path = public_path() . '/masters-photo/';
+        $path = public_path() . '/dishes-photo/';
         $gallery->move($path, $name);
         self::create([
             'master_id' => $master_id,
@@ -26,7 +26,7 @@ class Photo extends Model
 
     public function deletePhoto()
     {
-        $photo = public_path() . '/masters-photo/' . $this->photo;
+        $photo = public_path() . '/dishes-photo/' . $this->photo;
         unlink($photo);
         $this->delete();
     }

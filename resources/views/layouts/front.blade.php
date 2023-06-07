@@ -12,7 +12,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Noto+Sans+Zanabazar+Square&family=Tillana:wght@400;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     <!-- Scripts -->
     @vite(['resources/front/sass/app.scss', 'resources/front/js/app.js'])
 </head>
@@ -32,7 +32,7 @@
 
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto" style="font-size: 30px">
                         <!-- Authentication Links -->
                         @guest
                         @if (Route::has('login'))
@@ -48,8 +48,8 @@
                         @endif
                         @else
 
-                        <li class="nav-item">
-                            <a class="nav-link btn" href="{{ route('front-orders') }}">My orders</a>
+                        <li class="nav-item" style="font-size: 30px">
+                            <a class="nav-link btn" href="{{ route('front-orders') }}">Mano užs</a>
                         </li>
 
                         <li class="nav-item dropdown">

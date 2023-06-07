@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cat;
-use App\Models\Service;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -36,8 +36,8 @@ class CatController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:3|max:100',
+            'code' => 'required',
             'address' => 'required|min:3|max:100',
-            'phoneNumber' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -50,12 +50,12 @@ class CatController extends Controller
         $id = Cat::create([
             'title' => $request->title,
             'address' => $request->address,
-            'phoneNumber' => $request->phoneNumber,
+            'code' => $request->code,
         ])->id;
 
         return redirect()
         ->route('cats-index')
-        ->with('ok', 'New Car service was created');
+        ->with('ok', 'Naujas restoranas sukurtas');
     }
 
     public function show (Service $service, Cat $cat)
@@ -88,11 +88,11 @@ class CatController extends Controller
         $cat->update([
             'title' => $request->title,
             'address' => $request->address,
-            'phoneNumber' => $request->phoneNumber,
+            'code' => $request->code,
             
         ]);
         return redirect()->route('cats-index')
-        ->with('ok', 'New Car service was updated');
+        ->with('ok', 'Naujas restoranas papildytas');
     }
 
    
@@ -101,7 +101,7 @@ class CatController extends Controller
               
         $cat->delete();
         return redirect()->route('cats-index')
-        ->with('warn', 'Car service was deleted');
+        ->with('warn', 'Restoranas ištrintas');
 
     }
 

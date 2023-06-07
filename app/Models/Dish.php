@@ -10,18 +10,18 @@ use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\UploadedFile;
 
-class Master extends Model
+class Dish extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'surname', 'photo', 'cat_id'];
+    protected $fillable = ['title', 'description', 'photo', 'menu_id'];
     public $timestamps = false;
 
     public function deletePhoto()
     {
         if ($this->photo) {
-            $photo = public_path() . '/masters-photo/' . $this->photo;
+            $photo = public_path() . '/dishes-photo/' . $this->photo;
             unlink($photo);
-            $photo = public_path() . '/masters-photo/t_' . $this->photo;
+            $photo = public_path() . '/dishes-photo/t_' . $this->photo;
             unlink($photo);
         }
         $this->update([
@@ -33,7 +33,7 @@ class Master extends Model
     {
         $name = $photo->getClientOriginalName();
         $name = rand(1000000, 9999999) . '-' . $name;
-        $path = public_path() . '/masters-photo/';
+        $path = public_path() . '/dishes-photo/';
         $photo->move($path, $name);
         $img = Image::make($path . $name);
         $img->resize(200, 200);
@@ -51,9 +51,9 @@ class Master extends Model
     //     return $this->hasMany(Photo::class, 'hotel_id', 'id');
     // }
 
-    public function cat()
+    public function menu()
     {
-        return $this->belongsTo(Cat::class);
+        return $this->belongsTo(Menu::class);
     }
     
 }

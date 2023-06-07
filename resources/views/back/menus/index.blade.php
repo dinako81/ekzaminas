@@ -6,28 +6,25 @@
         <div class="col-12">
             <div class="card mt-5">
                 <div class="card-header">
-                    <h1>Services List</h1>
+                    <h1>Menu sąrašas</h1>
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
-                        @forelse($services as $service)
+                        @forelse($menus as $menu)
                         <li class="list-group-item">
-                            <div class="services-list">
-                                <div class="service">
+                            <div class="menus-list">
+                                <div class="menu">
                                     <div class="title-price">
                                         <div class="col-8">
-                                            <h2>{{$service->title}}</h2>
+                                            <h2> {{$menu->title}}</h2>
                                         </div>
                                         <div class="col-8">
-                                            <h2><span>{{$service->price}} EUR</span></h2>
-                                        </div>
-                                        <div class="col-8">
-                                            <h2><span>{{$service->cat->title}}</span></h2>
+                                            <h2><span><i> *****Restoranas: {{$menu->cat->title}}***</i></span></h2>
                                         </div>
                                         <div class="col-8">
                                             @if(Auth::user()->role < 5) <div class="buttons">
-                                                <a href="{{route('services-edit', $service)}}" class="btn btn-outline-success">Edit</a>
-                                                <form action="{{route('services-delete', $service)}}" method="post">
+                                                <a href="{{route('menus-edit', $menu)}}" class="btn btn-outline-success">Edit</a>
+                                                <form action="{{route('menus-delete', $menu)}}" method="post">
                                                     <button type="submit" class="btn btn-outline-danger">Delete</button>
                                                     @csrf
                                                     @method('delete')
@@ -41,7 +38,7 @@
                 </li>
                 @empty
                 <li class="list-group-item">
-                    <div class="cat-line">No services</div>
+                    <div class="cat-line">No menus</div>
                 </li>
                 @endforelse
                 </ul>

@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CatController as C;
-use App\Http\Controllers\ServiceController as P;
-use App\Http\Controllers\MasterController as M;
+use App\Http\Controllers\MenuController as M;
+use App\Http\Controllers\DishController as D;
 use App\Http\Controllers\FrontController as F;
 use App\Http\Controllers\CartController as CART;
 use App\Http\Controllers\OrderController as O;
@@ -24,7 +24,7 @@ use App\Http\Controllers\OrderController as O;
 Route::name('front-')->group(function () {
     Route::get('/', [F::class, 'index'])->name('index');
     // Route::get('/category/{cat}', [F::class, 'catColors'])->name('cat-colors');
-    Route::get('/service/{service}', [F::class, 'showService'])->name('show-service');
+    Route::get('/menu/{menu}', [F::class, 'showService'])->name('show-menu');
     Route::get('/my-orders', [F::class, 'orders'])->name('orders')->middleware('role:admin|client');
     Route::get('/download/{order}', [F::class, 'download'])->name('download')->middleware('role:admin|client');
 });
@@ -48,23 +48,23 @@ Route::prefix('cats')->name('cats-')->group(function () {
     Route::delete('/delete/{cat}', [C::class, 'destroy'])->name('delete')->middleware('role:admin');
 });
 
-Route::prefix('services')->name('services-')->group(function () {
-    Route::get('/', [P::class, 'index'])->name('index')->middleware('role:admin|client');
-    Route::get('/create', [P::class, 'create'])->name('create')->middleware('role:admin');
-    Route::post('/create', [P::class, 'store'])->name('store')->middleware('role:admin');
-    Route::get('/{service}', [P::class, 'show'])->name('show')->middleware('role:admin');
-    Route::get('/edit/{service}', [P::class, 'edit'])->name('edit')->middleware('role:admin');
-    Route::put('/edit/{service}', [P::class, 'update'])->name('update')->middleware('role:admin');
-    Route::delete('/delete/{service}', [P::class, 'destroy'])->name('delete')->middleware('role:admin');
-});
-
-Route::prefix('masters')->name('masters-')->group(function () {
-    Route::get('/', [M::class, 'index'])->name('index')->middleware('role:admin');
+Route::prefix('menus')->name('menus-')->group(function () {
+    Route::get('/', [M::class, 'index'])->name('index')->middleware('role:admin|client');
     Route::get('/create', [M::class, 'create'])->name('create')->middleware('role:admin');
     Route::post('/create', [M::class, 'store'])->name('store')->middleware('role:admin');
-    Route::get('/edit/{master}', [M::class, 'edit'])->name('edit')->middleware('role:admin');
-    Route::put('/edit/{master}', [M::class, 'update'])->name('update')->middleware('role:admin');
-    Route::delete('/delete/{master}', [M::class, 'destroy'])->name('delete')->middleware('role:admin');
+    Route::get('/{menu}', [M::class, 'show'])->name('show')->middleware('role:admin');
+    Route::get('/edit/{menu}', [M::class, 'edit'])->name('edit')->middleware('role:admin');
+    Route::put('/edit/{menu}', [M::class, 'update'])->name('update')->middleware('role:admin');
+    Route::delete('/delete/{menu}', [M::class, 'destroy'])->name('delete')->middleware('role:admin');
+});
+
+Route::prefix('dishes')->name('dishes-')->group(function () {
+    Route::get('/', [D::class, 'index'])->name('index')->middleware('role:admin');
+    Route::get('/create', [D::class, 'create'])->name('create')->middleware('role:admin');
+    Route::post('/create', [D::class, 'store'])->name('store')->middleware('role:admin');
+    Route::get('/edit/{dish}', [D::class, 'edit'])->name('edit')->middleware('role:admin');
+    Route::put('/edit/{dish}', [D::class, 'update'])->name('update')->middleware('role:admin');
+    Route::delete('/delete/{dish}', [D::class, 'destroy'])->name('delete')->middleware('role:admin');
 });
 
 Route::prefix('orders')->name('orders-')->group(function () {
