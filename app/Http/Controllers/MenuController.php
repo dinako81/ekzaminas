@@ -27,8 +27,11 @@ class MenuController extends Controller
     public function create()
     {
         $menus = Menu::all();
+        $cats = Cat::all();
+
         return view('back.menus.create', [  
-            'menus' => $menus
+            'menus' => $menus,
+            'cats' => $cats
         ]);
     }
 

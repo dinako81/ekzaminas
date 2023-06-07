@@ -24,7 +24,8 @@ use App\Http\Controllers\OrderController as O;
 Route::name('front-')->group(function () {
     Route::get('/', [F::class, 'index'])->name('index');
     // Route::get('/category/{cat}', [F::class, 'catColors'])->name('cat-colors');
-    Route::get('/menu/{menu}', [F::class, 'showService'])->name('show-menu');
+    Route::get('/dish/{dish}', [F::class, 'showDish'])->name('show-dish');
+    Route::get('/menu/{menu}', [F::class, 'showMenu'])->name('show-menu');
     Route::get('/my-orders', [F::class, 'orders'])->name('orders')->middleware('role:admin|client');
     Route::get('/download/{order}', [F::class, 'download'])->name('download')->middleware('role:admin|client');
 });

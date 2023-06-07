@@ -4,46 +4,52 @@ namespace App\Http\Controllers;
 
 use App\Models\Dish;
 use App\Models\Menu;
-use App\Models\Cat;
+use App\Models\Photo;
+
+
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic as Image;
-use Illuminate\Http\UploadedFile;
 
 class DishController extends Controller
 {
-    
-    public function index()
+
+    public function index(Request $request)
     {
-        $dishes= Dish::all();
+        $dishes = Dish::all();
+        $photos = Photo::all();
 
         return view('back.dishes.index', [
-            'dishes' => $dishes
-        ]);
-    }
-
-   
-    public function create()
-    {      
-        $cats = Cat::all();
-        $dishes= Dish::all();
-
-        return view('back.dishes.create', [  
             'dishes' => $dishes,
-            'cats' => $cats,
+            'photos' => $photos,
+          
         ]);
     }
 
-  
-    public function store(Request $request, Food $food)
+    public function create()
     {
+        $menus = Menu::all();
+        $dishes = Dish::all();
+        
+        return view('back.dishes.create', [
+            'dishes' => $dishes,
+            'menus' => $menus,
+        ]);
+
+
+    }
+
+    
+
+    public function store(Request $request, Dish $dish)
+    {
+
         $validator = Validator::make($request->all(), [
-            'name' => 'required|min:3|max:100',
-            'surname' => 'required|min:3|max:100',
+            'title' => 'required|min:3|max:100',
+            'description' => 'required',
             'photo' => 'sometimes|required|image|max:512',
-             ]);
+            'gallery.*' => 'sometimes|required|image|max:512'
+        ]);
 
         if ($validator->fails()) {
             $request->flash();
@@ -54,92 +60,96 @@ class DishController extends Controller
         
         $photo = $request->photo;
         if ($photo) {
-            $name = $food->savePhoto($photo);
+            $name = $dish->savePhoto($photo);
         }
-        $id = Master::create([
-            'cat_id' => $request->cat_id,
-            'name' => $request->name,
-            'surname' => $request->surname,
+        $id = Dish::create([
+            'menu_id' => $request->menu_id,
+            'title' => $request->title,
+            'description' => $request->description,   
             'photo' => $name ?? null
         ])->id;
 
-      
+        foreach ($request->gallery ?? [] as $gallery) {
+            Photo::add($gallery, $id);
+        }
+
         return redirect()
-        ->route('dishes-index')
-        ->with('ok', 'New Master was created');
+        ->route('dishes-index');
+       
     }
 
-   
-    public function show(Master $food)
+    public function show(Dish $dish)
     {
-        //
-    }
+        $dishes = Dish::all();
 
-   
-    public function edit(Master $food)
-    {
-        $services = Menu::all();
-        $cats = Cat::all();
-        
-        return view('back.dishes.edit', [
-            'food' => $food,
-            'services' => $services,
-            'cats' => $cats,
+        return view('back.dishes.show', [
+            'menus' => $menus,
+            'dishes' => $dishes
         ]);
     }
 
-    
-    public function update(Request $request, Master $food)
+
+    public function edit(Dish $dish)
+    {
+        $menus = Menu::all();
+        
+        return view('back.dishes.edit', [
+            'dish' => $dish,
+            'menus' => $menus
+        ]);
+    }
+
+
+    public function update(Request $request, Dish $dish)
     {
         if ($request->delete == 1) {
-            $food->deletePhoto();
+            $dish->deletePhoto();
             return redirect()->back();
         }
 
         $photo = $request->photo;
 
         if ($photo) {
-            $name = $food->savePhoto($photo);
-            $food->deletePhoto();
-            $food->update([
-                'name' => $request->name,
-                'surname' => $request->surname,
-                'photo' => $request->photo,
-                'cat_id' =>$request->cat_id,
+            $name = $dish->savePhoto($photo);
+            $dish->deletePhoto();
+            $dish->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                 'photo' => $request->photo,
+                'menu_id' =>$request->menu_id,
             ]);
         } else {
-            $food->update([
-                'name' => $request->name,
-                'surname' => $request->surname,
-                'cat_id' =>$request->cat_id,
+            $dish->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'menu_id' =>$request->menu_id,
+                
             ]);
         }
 
         foreach ($request->gallery ?? [] as $gallery) {
-            Photo::add($gallery, $food->id);
+            Photo::add($gallery, $dish->id);
         }
-        return redirect()
-        ->route('dishes-index')
-        ->with('ok', 'Master was updated');
+        return redirect()->route('dishes-index')
+        ->with('ok', 'Patiekalas papildytas');
     }
 
-   
-    public function destroy(Master $food)
+
+    public function destroy(Dish $dish)
     {
-        // if ($food->gallery->count()) {
-        //     foreach ($food->gallery as $gal) {
+        // if ($dish->gallery->count()) {
+        //     foreach ($dish->gallery as $gal) {
         //         $gal->deletePhoto();
         //     }
         // }
         
-        if ($food->photo) {
-            $food->deletePhoto();
+        if ($dish->photo) {
+            $dish->deletePhoto();
         }
         
-        $food->delete();
+        $dish->delete();
         return redirect()
-        ->route('dishes-index')
-        ->with('warn', 'Master was deleted');
+        ->route('dishes-index');
         
     }
 
@@ -147,9 +157,8 @@ class DishController extends Controller
     {
         $photo->deletePhoto();
         
-        return redirect() 
-        -> back()
-        ->with('warn', 'Photo was deleted');
+        return redirect() -> back()
+        ->with('warn', 'Patiekalas i6trintas');
         
     }
 }

@@ -22,10 +22,8 @@
                                     @endif
                                 </div> --}}
                                 <div class="mb-3">
-                                    <h2>{{$cat->title}}</h2>
-                                </div>
-                                <div class="mb-3">
-                                    <h3>{{$cat->adress}}</h3>
+                                    Restorano pavadinimas: <h2>{{$cat->title}}</h2>
+                                    <span>Adresas: {{$cat->address}}, Kodas: {{$cat->code}} </span>
                                 </div>
                                 {{-- <div class="cat-colors-count">
                                         @for($i = 0; $i < $cat->colors_count; $i++)

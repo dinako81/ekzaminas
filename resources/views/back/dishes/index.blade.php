@@ -21,17 +21,17 @@
                                         <img src="{{asset('dishes-photo') .'/no.jpg'}}">
                                         @endif
                                     </div>
-                                    <h2>{{$dish->title}}</h2>
-                                    <h2>{{$dish->description}}</h2>
-                                    <h2>{{$dish->cat->title}}
-                                        <div class="buttons">
-                                            <a href="{{route('dishes-edit', $dish)}}" class="btn btn-outline-success">Edit</a>
-                                            <form action="{{route('dishes-delete', $dish)}}" method="post">
-                                                <button type="submit" class="btn btn-outline-danger">delete</button>
-                                                @csrf
-                                                @method('delete')
-                                            </form>
-                                        </div>
+                                    Patiekolo pavadinimas: <h3>{{$dish->title}}</h3>
+                                    Patiekalo aprašas: {{$dish->description}}
+                                    {{-- <h2>{{$dish->menu->title}} --}}
+                                    <div class="buttons">
+                                        <a href="{{route('dishes-edit', $dish)}}" class="btn btn-outline-success">Edit</a>
+                                        <form action="{{route('dishes-delete', $dish)}}" method="post">
+                                            <button type="submit" class="btn btn-outline-danger">delete</button>
+                                            @csrf
+                                            @method('delete')
+                                        </form>
+                                    </div>
                                 </div>
                         </li>
                         @empty

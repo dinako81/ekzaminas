@@ -2,7 +2,7 @@
 /node_modules
 /public/build
 /public/hot
-/public/masters-photo
+/public/dishes-photo
 /public/storage
 /storage/*.key
 /vendor

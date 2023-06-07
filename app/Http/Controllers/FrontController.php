@@ -50,7 +50,7 @@ class FrontController extends Controller
 
     // public function catColors(Cat $cat)
     // {
-    //     $menus = $cat->service;
+    //     $menus = $cat->menu;
 
     //     return view('front.cat-index', [
     //         'menus' => $menus,
@@ -58,10 +58,17 @@ class FrontController extends Controller
     //     ]);
     // }
 
-    public function showService(Menu $service)
+    public function showDish(Dish $dish)
     {
-        return view('front.service', [
-            'service' => $service,
+        return view('front.dishes', [
+            'dish' => $dish,
+        ]);
+    }
+
+    public function showMenu(Menu $menu)
+    {
+        return view('front.menu', [
+            'menu' => $menu,
         ]);
     }
 
@@ -80,7 +87,7 @@ class FrontController extends Controller
 
         $serviceNames = array_map(fn($p) => $p['title'], $order->menus);
 
-        // mapinam $order->servicies, ir grazninam service is vardu
+        // mapinam $order->servicies, ir grazninam menu is vardu
 
         $servicies = Menu::whereIn('title', $serviceNames)->get();
         // reikia susirasti produktus pagl spalvas

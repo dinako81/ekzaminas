@@ -9,17 +9,17 @@ use Illuminate\Http\UploadedFile;
 class Photo extends Model
 {
     use HasFactory;
-    protected $fillable = ['photo', 'master_id'];
+    protected $fillable = ['photo', 'dish_id'];
     public $timestamps = false;
 
-    public static function add(UploadedFile $gallery, int $master_id)
+    public static function add(UploadedFile $gallery, int $dish_id)
     {
         $name = $gallery->getClientOriginalName();
         $name = rand(1000000, 9999999) . '-' . $name;
         $path = public_path() . '/dishes-photo/';
         $gallery->move($path, $name);
         self::create([
-            'master_id' => $master_id,
+            'dish_id' => $dish_id,
             'photo' => $name
         ]);
     }

@@ -51,8 +51,8 @@ class CartController extends Controller
         return view('front.cart', [
             'count' => count($cart),
             'total' => $Cart->total(),
-            'services' => $Cart->services()
-            // $Cart->services() is entities Cart
+            'dishes' => $Cart->dishes()
+            // $Cart->dishes() is entities Cart
         ]);
     }
 
@@ -95,7 +95,7 @@ class CartController extends Controller
         $services = [];
         $total = 0;
 
-        $Cart->services()->each(function($p, $key) use (&$total, &$services) {
+        $Cart->dishes()->each(function($p, $key) use (&$total, &$services) {
 
             $services[$key]['title'] = $p->title;
             $services[$key]['count'] = $p->count;

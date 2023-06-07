@@ -49,7 +49,7 @@
                         @else
 
                         <li class="nav-item" style="font-size: 30px">
-                            <a class="nav-link btn" href="{{ route('front-orders') }}">Mano užs</a>
+                            <a class="nav-link btn" href="{{ route('front-orders') }}">Mano užsakymai</a>
                         </li>
 
                         <li class="nav-item dropdown">

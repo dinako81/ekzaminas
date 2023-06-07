@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    protected $fillable = ['services', 'user_id', 'status', 'price'];
+    protected $fillable = ['dishes', 'user_id', 'status'];
     public $timestamps = false;
     protected $casts = [
-        'services' => 'array',
+        'dishes' => 'array',
     ];
     // is stringo gabala sucastina imasyva, array bus automatiskai paverstas i jason stringa kuris tiks DB
 
@@ -23,5 +23,10 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // public function dish()
+    // {
+    //     return $this->hasMany(Dish::class);
+    // }
    
 }

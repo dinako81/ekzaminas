@@ -2,19 +2,18 @@
 
 namespace App\Entities;
 
-use App\Models\Service;
+use App\Models\Dish;
 
+class Cart
+{
 
+    private $dishes;
 
-class Cart{
-
-    // sitoje klaseje mes turesime metodus kurie skaiciuoja produktu kainas, pagal pateikta krepseli. Mes duodam krepseli, o klase paskaiciuoja kaina.
     public function __construct(array $cart) 
     {
-        // constructorius gave cart nukeliauja i DB ir surekta visus productus kurie isvardinti cart. Kad toliau turetumem is ko skaiciuot
-        $serviceId = array_keys($cart);
-        $this->service = Service::whereIn('id', $serviceId)->get();
-        $this->service = $this->service->map(function($p) use ($cart) {
+        $hotelsId = array_keys($cart);
+        $this->dishes = Dish::whereIn('id', $hotelsId)->get();
+        $this->dishes = $this->dishes->map(function($p) use ($cart) {
             $p->count = $cart[$p->id];
             return $p;
         });
@@ -23,18 +22,14 @@ class Cart{
 
     public function total()
     {
-        return $this->service->reduce(function ($carry, $item) {
+        return $this->dishes->reduce(function ($carry, $item) {
             return $carry + $item->count * $item->price;
         }, 0);
-
-        // $carry kaupiklis, kur kaupiasi suma, $items - productai, 0-prasideda nuo 0.
     }
 
-    public function service()
+    public function dishes()
     {
-        return $this->service;
+        return $this->dishes;
     }
-
-    // kasike rodys produktus
 
 }

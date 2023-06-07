@@ -30,7 +30,7 @@
 </body>
 
 <table>
-    @foreach($services as $service)
+    @foreach($dishes as $dish)
     <tr>
         {{-- @foreach($service->color as $color)
         <td style="background-color:{{$color->hex}};">
